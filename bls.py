@@ -26,8 +26,7 @@ class OLSBootstrap(object):
             random number generators.
         """
         self.entropy = entropy
-        self._β = None
-        self._σ = None
+        self._βs = None
         self.data = np.asfarray(data)
         
         if isinstance(data, pd.DataFrame):
@@ -64,7 +63,7 @@ class OLSBootstrap(object):
         self.stack_sizes = [max_size]*n1 + [max_size-1]*n2
 
     def _subsample_regress(self, stack_size, seq):
-        rng = np.random.default_rng(seq)
+        rng = np.random.default_rng(np.random.PCG64DXSM(seq))
         chunk = rng.choice(self.data, size=(stack_size, self.data.shape[0]))
 
         # regress using vectorized least squares
@@ -80,7 +79,7 @@ class OLSBootstrap(object):
 
     def fit(self, alpha=0.05):
         """Performs the actual bootstrapping, and produces
-        100(1-α)% confidence intervals.
+        100(1-α)% confidence intervals.   
         """
         α = alpha
 
@@ -102,24 +101,17 @@ class OLSBootstrap(object):
                 pool.starmap(self._get_stats, enumerate(βs.T)),
                 dtype=[("key", "i4"), ("β", "f8"), ("σ", "f8")])
 
-        self._β = stats["β"]
-        self._σ = stats["σ"]
-
-        z = norm.ppf(1-α/2) / np.sqrt(self.data.shape[0])
+        self._βs = βs
+        z = norm.ppf(1-α/2)
         per = 100*(1-α)
         for key, β, σ in stats:
             print(f"{self.cols[key]} has bootstrap coef {β:.8f} with "
                   f"bootstrapped {per}% CI ({β-z*σ:.8f}, {β+z*σ:.8f}).")
     
     @property
-    def coef(self):
+    def coefs(self):
         """The bootstrap mean of the coefficients."""
-        return self._β
-
-    @property
-    def std(self):
-        """The bootstrap unbiased standard deviation of the coefficients."""
-        return self._σ
+        return self._βs
     
     
     

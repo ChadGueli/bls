@@ -16,5 +16,4 @@ if __name__ == "__main__":
     print("The MapReduce bootstrap took " 
           f"{datetime.now() - start} to complete.")
     
-    print(olsb.coef)
-    print(olsb.std)
+    print(olsb.coefs)

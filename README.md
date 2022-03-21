@@ -26,16 +26,15 @@ if __name__ == "__main__":
     olsb = bls.OLSBootstrap(data)
 
     # fit and optionally choose your confidence level
-    # default is alpha=0.05 for basic 95% CIs with bootstrap SE
+    # default is alpha=0.05 for basic 95% CIs with bootstrap SE.
     olsb.fit(alpha=0.10)
 
     # If you want to construct more advanced confidence
-    # bound estimators, you can access the coefficients
-    # and their unbiased bootstrap standard deviations
-    # after fitting via the corresponding methods.
-    olsb.coef
-    olsb.std
+    # bound estimators, you can access the coefficients.
+    olsb.coefs
 ```
+
+Please note, the default confidence intervals have form $\hat{\beta}_i^* ± z_{\alpha/2}\hat{\sigma}_i$ where $\hat{\beta}_i^*$ and $\hat{\sigma}$ are respectively the mean and sample standard deviation of the subsampled coefficients. There is NO division by $\sqrt{n}$. Normally, we use $s$ to approximate the standard deviation of the sample, and divide by $\sqrt{n}$ to approximate the standard deviation of the distribution of sample coefficients. Here, we are subsampling to approximate the distribution of sample coefficients, and directly taking the sample standard deviation of that coefficient distribution. As such, dividing $\hat{\sigma}_i$ by $\sqrt{n}$ would produce intervals with confidence far below the nominal value.
 
 ## For Optimal Performance:
 - It may be necessary to tweak the number of cores used.
