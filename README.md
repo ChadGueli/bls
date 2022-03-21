@@ -6,7 +6,7 @@ This module provides a bootstrapped linear regression algorithm accelerated by p
 The program efficiently distributes computations over your CPU's cores.
 The result is a parallelized bootstrap algorithm that is delightfully quick, even on a modern laptop.
 
-The test file, which is 1.2 Mb and gets subsampled 100,000 times, runs in less than 30 minutes on modern laptops, and under 10 minutes on high-end laptops. These observations were made on MacOS. With a 32-core processor in an HPC, the computation takes under 5 minutes. Using a for-loop and statsmodels, the same computation would take about 4 hours on a laptop.
+The test file, which is 9.6 Mb and gets subsampled 100,000 times, runs in less than 30 minutes on modern laptops, and under 10 minutes on high-end laptops. These observations were made on MacOS. With a 32-core processor in an HPC, the computation takes under 5 minutes. Using a for-loop and statsmodels, the same computation would take about 4 hours on a laptop.
 
 ## Usage
 
