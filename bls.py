@@ -23,7 +23,7 @@ class OLSBootstrap(object):
                 parallelize the implementation on. Defaults
                 to half of the available CPU cores.
             entropy: The entropy used to initialize the
-            random number generators.
+                random number generators.
         """
         self.entropy = entropy
         self._βs = None
