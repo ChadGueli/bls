@@ -17,16 +17,18 @@ import pandas as pd
 
 import bls
 
-# have your data ready in an array-like; for example
+# Have your data ready in an array-like; for example
 data = pd.read_csv("data.csv")
 
-# Use this condition, else problems with parallelization may occur.
+# Use this condition, else problems with parallelization
+# may occur.
 if __name__ == "__main__":
-    # initialize an OLSBootstrap instance on the data
+    # initialize
     olsb = bls.OLSBootstrap(data)
 
-    # fit and optionally choose your confidence level
-    # default is alpha=0.05 for basic 95% CIs with bootstrap SE
+    # Fit and optionally choose your confidence level.
+    # The default is alpha=0.05 for basic 95% CIs with
+    # bootstrap SE.
     olsb.fit(alpha=0.10)
 
     # If you want to construct more advanced confidence
