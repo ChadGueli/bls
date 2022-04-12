@@ -23,8 +23,7 @@ class OLSBootstrap(object):
                 parallelize the implementation on. Defaults
                 to half of the available CPU cores.
             entropy: The entropy used to initialize the
-                random number generators. Before use, please read
-                https://numpy.org/doc/stable/reference/random/bit_generators/index.html#seeding-and-entropy.
+                random number generators.
         """
         self.entropy = entropy
         self._βs = None
@@ -68,10 +67,12 @@ class OLSBootstrap(object):
         chunk = rng.choice(self.data, size=(stack_size, self.data.shape[0]))
 
         # regress using vectorized least squares
-        y = chunk[..., :1]
-        X = chunk[..., 1:]
-        invXᵀX = np.linalg.pinv(X.swapaxes(1, 2) @ X, hermitian=True)
-        return np.squeeze(invXᵀX @ (X.swapaxes(1, 2) @ y))
+        ys = chunk[..., 0]
+        Xs = chunk[..., 1:]
+        Xᵀys = np.einsum("ijk,ij->ik", Xs, ys)
+        invXᵀXs = np.linalg.pinv(np.einsum("ijk,ijl->ikl", Xs, Xs),
+                                hermitian=True)
+        return np.einsum("ijk,ij->ik", invXᵀXs, Xᵀys)
         
     def _get_stats(self, key, βs):
         return key, np.mean(βs), np.std(βs)
@@ -86,7 +87,6 @@ class OLSBootstrap(object):
         # that are independent with high probability.
         seed_seq = np.random.SeedSequence(entropy=self.entropy,
                                           pool_size=8)
-        print(f"This bootstrap has entropy {seed_seq.entropy}.")
         seqs = seed_seq.spawn(len(self.stack_sizes))
         with mp.Pool(processes=self.n_workers) as pool:
             # map
