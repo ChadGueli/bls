@@ -97,9 +97,7 @@ class OLSBootstrap(object):
             βs = np.concatenate(β_stacks)
 
             # reduce (column index is key)
-            stats = np.array(
-                pool.starmap(self._get_stats, enumerate(βs.T)),
-                dtype=[("key", "i4"), ("β", "f8"), ("σ", "f8")])
+            stats = pool.starmap(self._get_stats, enumerate(βs.T))
 
         self._βs = βs
         z = norm.ppf(1-α/2)
@@ -110,7 +108,7 @@ class OLSBootstrap(object):
     
     @property
     def coefs(self):
-        """The bootstrap mean of the coefficients."""
+        """The coefficients for every subsample."""
         return self._βs
     
     
