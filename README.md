@@ -8,7 +8,7 @@ The result is a parallelized bootstrap algorithm that is delightfully quick, eve
 
 The test file, which is 9.6 Mb and gets subsampled 100,000 times, runs in less than 30 minutes on modern laptops, and in under 10 minutes on high-end laptops. These observations were made on MacOS. With a 32-core processor in an HPC, the computation takes under 5 minutes. Using a for-loop and statsmodels, the same computation would take about 4 hours on a laptop.
 
-This project was originally created as a homework assignment for SBU AMS 598 with Dr. Song Wu. The goal was to use MapReduce to implement a linear regression bootstrap on data with 100,000 observations and 20 explanatory variables that ran in under 10 minutes on a SeaWulf cluster. Suffice it to say that we have overcome the task. In publishing this, I generalized the code a little and optimized it to run on a laptop. As such, I have stayed true to the assignment. I know that using joblib would make this run even faster, but multiprocessing is just fine. NOTE WELL, Prof. Wu nows that this repo is here and if you submit my code, you will know fear.
+This project was originally created as a homework assignment for SBU AMS 598 with Dr. Song Wu. The goal was to use MapReduce to implement a linear regression bootstrap on data with 100,000 observations and 20 explanatory variables that ran in under 10 minutes on a SeaWulf cluster. Suffice it to say that we have overcome the task. In publishing this, I generalized the code a little and optimized it to run on a laptop. As such, I have stayed true to the assignment. I know that using joblib would make this run even faster, but multiprocessing is just fine. NOTE WELL, Prof. Wu knows that this repo is here, and if you submit my code, you will know fear.
 
 ## Usage
 
