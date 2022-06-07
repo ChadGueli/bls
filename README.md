@@ -38,7 +38,7 @@ if __name__ == "__main__":
     olsb.coefs
 ```
 
-Please note, the default confidence intervals have form $\hat{\beta}_i^* \pm z_{\alpha/2}\hat{\sigma}_i$ where $\hat{\beta}_i^*$ and $\hat{\sigma}$ are respectively the mean and sample standard deviation of the subsampled coefficients. There is NO division by $\sqrt{n}$. Normally, we use $s$ to approximate the standard deviation of the sample, and divide by $\sqrt{n}$ to approximate the standard deviation of the distribution of sample means. Here, we are subsampling to approximate the distribution of sample coefficients, and directly taking the sample standard deviation of that coefficient distribution. As such, dividing $\hat{\sigma}_i$ by $\sqrt{n}$ would produce intervals with confidence far below the nominal value.
+Please note, the default confidence intervals have form (intentional typo because of mathjax bug) $\pm z_{\alpha/2} \hat{\sigma}_i$ where $\hat{\beta}^*_i$ and $\hat{\sigma}_i$ are, respectively, the mean and sample standard deviation of the subsampled $i$ th coefficients. There is NO division by $\sqrt{n}$. Usually, we use $s$ as an unbiased estimate of the standard deviation of the sample, and divide by $\sqrt{n}$ to approximate the standard deviation of the distribution of sample means. Here, we are repeatedly subsampling to approximate the distribution of sample means, and directly taking the sample standard deviation of that distribution. As such, dividing $\hat{\sigma}_i$ by $\sqrt{n}$ would produce intervals with confidence far below the nominal value.
 
 ## For Optimal Performance:
 - It may be necessary to tweak the number of cores used.
