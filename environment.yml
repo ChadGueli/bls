@@ -1,0 +1,10 @@
+name: base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python >= 3.7
+  - numpy >= 1.14
+  - pandas
+  - scipy
+  - psutil

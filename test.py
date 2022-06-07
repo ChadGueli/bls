@@ -3,7 +3,7 @@ from datetime import datetime
 
 import bls
 
-if __name__ == "__main__":
+def test():
     data = pd.read_csv("data.csv")
     # β = [ 4  2  0 12  9  0  0  1 15  3 12  0]
     
@@ -17,3 +17,6 @@ if __name__ == "__main__":
     print(f"The MapReduce bootstrap took {t1-t0} to complete.")
     
     print(olsb.coefs)
+
+if __name__ == "__main__":
+    test()
